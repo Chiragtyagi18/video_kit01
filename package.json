@@ -9,7 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@imagekit/next": "^2.1.4",
+    "@imagekit/nodejs": "^7.3.0",
+    "bcryptjs": "^3.0.3",
+    "imagekit": "^6.0.0",
+    "imagekitio-react": "^4.3.0",
+    "lucide-react": "^0.575.0",
+    "mongoose": "^9.1.5",
     "next": "16.1.4",
+    "next-auth": "^4.24.13",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

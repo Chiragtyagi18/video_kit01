@@ -1,0 +1,88 @@
+"use client";
+
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+
+function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError("Invalid email or password");
+    } else {
+      router.push("/");
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 px-4">
+      
+      <div className="w-full max-w-md rounded-2xl bg-amber-800/10 backdrop-blur-lg shadow-2xl p-8 border border-amber-800/20">
+        
+        <h1 className="text-3xl font-bold text-amber-900 text-center mb-6">
+          Welcome Back
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            className="w-full rounded-lg px-4 py-2 bg-amber-50 text-stone-800 placeholder-stone-400 border border-amber-800/30 focus:outline-none focus:ring-2 focus:ring-amber-700 transition"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            className="w-full rounded-lg px-4 py-2 bg-amber-50 text-stone-800 placeholder-stone-400 border border-amber-800/30 focus:outline-none focus:ring-2 focus:ring-amber-700 transition"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {error && (
+            <p className="text-sm text-red-200 bg-red-500/20 px-3 py-2 rounded">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-amber-800 text-amber-50 font-semibold py-2 hover:bg-amber-900 transition duration-300 shadow-md"
+          >
+            Login
+          </button>
+
+        </form>
+
+        <p className="text-center text-stone-600 text-sm mt-6">
+          Don't have an account?{" "}
+          <button
+            onClick={() => router.push("/register")}
+            className="font-semibold underline hover:text-amber-900 text-amber-800"
+          >
+            Register
+          </button>
+        </p>
+
+      </div>
+    </div>
+  );
+}
+
+export default LoginPage;
